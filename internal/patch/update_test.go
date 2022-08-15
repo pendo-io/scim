@@ -86,6 +86,15 @@ func TestOperationValidator_ValidateUpdate(t *testing.T) {
 			invalid: `{"op":"add","path":"test:PatchEntity:complexMultiValued[attr2 eq \"value\"].attr1","value":"value"}`,
 		},
 
+		// Example on page 35 (RFC7644, Section 8.2) for a boolean value
+		{valid: `{"op":"add","path": "boolean1","value":true}`},
+		{valid: `{"op":"add","path": "boolean1","value":false}`},
+		// Azure AD sending strings for booleans
+		{valid: `{"op":"add","path": "boolean1","value":"True"}`},
+		{valid: `{"op":"add","path": "boolean1","value":"False"}`},
+		// Invalid value
+		{invalid: `{"op":"add","path": "boolean1","value":"abc"}`},
+
 		// Valid path, attribute not found.
 		{invalid: `{"op":"add","path":"invalid","value":"value"}`},
 		{invalid: `{"op":"add","path":"complex.invalid","value":"value"}`},
