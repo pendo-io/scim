@@ -179,12 +179,21 @@ func (a CoreAttribute) ValidateSingular(attribute interface{}) (interface{}, *er
 
 		return bin, nil
 	case attributeDataTypeBoolean:
-		b, ok := attribute.(bool)
-		if !ok {
+		// Azure AD will send booleans as strings as part of user patch operations
+		if bstr, ok := attribute.(string); ok {
+			bstr = strings.ToLower(bstr)
+			if bstr == "true" {
+				return true, nil
+			} else if bstr == "false" {
+				return false, nil
+			} else {
+				return nil, &errors.ScimErrorInvalidValue
+			}
+		} else if b, ok := attribute.(bool); !ok {
 			return nil, &errors.ScimErrorInvalidValue
+		} else {
+			return b, nil
 		}
-
-		return b, nil
 	case attributeDataTypeComplex:
 		obj, ok := attribute.(map[string]interface{})
 		if !ok {

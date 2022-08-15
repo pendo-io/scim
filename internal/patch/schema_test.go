@@ -18,6 +18,9 @@ var (
 				Name:        "multiValued",
 				MultiValued: true,
 			})),
+			schema.SimpleCoreAttribute(schema.SimpleBooleanParams(schema.BooleanParams{
+				Name: "boolean1",
+			})),
 			schema.ComplexCoreAttribute(schema.ComplexParams{
 				Name: "complex",
 				SubAttributes: []schema.SimpleParams{
