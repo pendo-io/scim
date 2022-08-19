@@ -103,6 +103,10 @@ func TestOperationValidator_ValidateRemove(t *testing.T) {
 		// attribute's sub-attributes
 		{valid: `{"op":"remove","path":"complexMultiValued[attr1 eq \"value\"]"}`},
 		{valid: `{"op":"remove","path":"complexMultiValued[attr1 eq \"value\"].attr1"}`},
+		// The RFC does not list these as possible values, but Azure AD will send this format with removal of
+		// multiple group members
+		{valid: `{"op":"remove","path":"complexMultiValued", "value": [{"attr1": "value1"}, {"attr1": "value2"}]}`},
+		{valid: `{"op":"remove","path":"complexMultiValued", "value": [{"no such attribute": "value1"}]}`},
 	} {
 		t.Run(fmt.Sprintf("%d", i), func(t *testing.T) {
 			// valid
