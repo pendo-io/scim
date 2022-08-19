@@ -40,6 +40,11 @@ func (v OperationValidator) validateRemove() (interface{}, error) {
 	if v.value == nil {
 		return nil, nil
 	}
+	/* Azure AD will send this payload for removals:
+			{"schemas":["urn:ietf:params:scim:api:messages:2.0:PatchOp"],
+		     "Operations":[{"op":"Remove","path":"members","value":[{"value":"12345"}]}}}
+	       The RFC does not cover any values being part of a Patch Remove, but this will accommodate it, for better or for worse
+	*/
 	if !refAttr.MultiValued() {
 		attr, scimErr := refAttr.ValidateSingular(v.value)
 		if scimErr != nil {
