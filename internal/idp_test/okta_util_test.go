@@ -1,6 +1,7 @@
 package idp_test
 
 import (
+	"github.com/elimity-com/scim/logging"
 	"net/http"
 
 	"github.com/elimity-com/scim"
@@ -11,6 +12,7 @@ import (
 
 func newOktaTestServer() scim.Server {
 	return scim.Server{
+		Log: logging.NullLogger{},
 		ResourceTypes: []scim.ResourceType{
 			{
 				ID:          optional.NewString("User"),

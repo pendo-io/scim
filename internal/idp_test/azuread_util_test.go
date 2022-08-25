@@ -1,6 +1,7 @@
 package idp_test
 
 import (
+	"github.com/elimity-com/scim/logging"
 	"net/http"
 	"time"
 
@@ -18,6 +19,7 @@ var azureCreatedTime = time.Date(
 
 func newAzureADTestServer() scim.Server {
 	return scim.Server{
+		Log: logging.NullLogger{},
 		Config: scim.ServiceProviderConfig{
 			MaxResults: 20,
 		},

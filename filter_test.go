@@ -2,6 +2,7 @@ package scim_test
 
 import (
 	"encoding/json"
+	"github.com/elimity-com/scim/logging"
 	"io/ioutil"
 	"net/http"
 	"net/http/httptest"
@@ -131,6 +132,7 @@ func Test_User_Filter(t *testing.T) {
 
 func newTestServerForFilter() scim.Server {
 	return scim.Server{
+		Log: logging.NullLogger{},
 		ResourceTypes: []scim.ResourceType{
 			{
 				ID:          optional.NewString("User"),

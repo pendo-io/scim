@@ -3,6 +3,7 @@ package scim
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/elimity-com/scim/logging"
 	"io"
 	"net/http"
 	"net/http/httptest"
@@ -961,6 +962,7 @@ func newTestServer() Server {
 	userSchemaExtension := getUserExtensionSchema()
 	return Server{
 		Config: ServiceProviderConfig{},
+		Log:    logging.NullLogger{},
 		ResourceTypes: []ResourceType{
 			{
 				ID:          optional.NewString("User"),
